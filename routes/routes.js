@@ -18,9 +18,9 @@ api.route("/signup").post(
   middle.requireFields(["email", "profileName", "password"]),
   passport.authenticate('local-signup'),
   (req, res, next) => {
-    req.user.confirmEmailToken = crypto.randomBytes(16).toString('hex')
+    /*req.user.confirmEmailToken = crypto.randomBytes(16).toString('hex')
     req.user.save()
-      .then((user) => {
+      .then((user) => {*/
         res.sendStatus(200)
 
         //now send confirmation email
@@ -30,11 +30,11 @@ api.route("/signup").post(
           })
           .then((info) => {console.log("Message sent: %s", info.messageId)})
           .catch((err) => {console.log(err)})
-      })
+      /*})
       .catch((err) => {
         console.log(err)
         res.sendStatus(500)
-      })
+      })*/
   }
 )
 
@@ -87,23 +87,21 @@ api.route("/forgotPassword").post(
   (req, res) => {
     req.user.resetPasswordToken = crypto.randomBytes(16).toString('hex')
     req.user.resetPasswordExpires = Date.now() + 3600000 //1 hour
-    req.user.save((err, user) => {
-      if (err) {
-        console.log(err)
-        res.sendStatus(500).json({message: "Unknown database error"})
-      }
+    req.user.save()
+      .then((user) => {
+        res.status(200).json(user)
 
-      mailer.sendEmail("forgotPassword", user.email, {
-        name: user.profileName,
-        link: "http://" + req.headers.host + "/reset/" + req.user.resetPasswordToken
-      }).then((info) => {
-          console.log("Message sent: %s", info.messageId)
-          res.status(200).json(user)
-      }).catch((err) => {
-          console.log(err)
-          res.status(500)
+        mailer.sendEmail("forgotPassword", user.email, {
+            name: user.profileName,
+            link: "http://" + req.headers.host + "/reset/" + req.user.resetPasswordToken
+          })
+          .then((info) => {console.log("Message sent: %s", info.messageId)})
+          .catch((err) => {console.log(err)})
       })
-    })
+      .catch((err) => {
+        console.log(err)
+        res.sendStatus(500)
+      })
   }
 )
 

@@ -48,31 +48,21 @@ module.exports = {
     next()
   },
 
-  changePassword(req, res, next) {
+  changePassword(req, res) {
     req.user.password = req.user.generateHash(req.body.newPassword)
-    req.user.save( (err, user) => {
-      if (err) {
-        console.log(err)
-        return res.status(500).json({message: "Unknown database error"})
-      }
-      user.password = undefined
-      req.user = user
+    req.user.save()
+      .then((user) => {
+        res.status(200).json({message: "Password successfully changed"})
 
-      var mailOptions = {
-        from: '"AaronP" <aaron@bob.com>',
-        to: user.email,
-        subject: "Password Changed for " + user.profileName,
-        text: "Your password has been successfully changed."
-      }
-
-      mailer.sendMail(mailOptions, (err, info) => {
-        if (err)
-          return console.log(err)
-        console.log("Message sent: %s", info.messageId)
-        res.sendStatus(200)
+        mailer.sendEmail("passwordChanged", user.email, {
+            name: user.profileName
+          })
+          .then((info) => {console.log("Message sent: %s", info.messageId)})
+          .catch((err) => {console.log(err)})
       })
-
-      res.status(200).json({message: "Password successfully changed"})
-    })
+      .catch((err) => {
+        console.log(err)
+        return res.status(500)
+      })
   }
 }

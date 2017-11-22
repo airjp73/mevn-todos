@@ -1,5 +1,6 @@
 var LocalStrategy = require("passport-local").Strategy
 var User = require("../models/user.js")
+var crypto = require("crypto")
 
 module.exports = function(passport) {
   //session setup
@@ -22,28 +23,26 @@ module.exports = function(passport) {
     passReqToCallback : true
   },
   function(req, email, password, done) {
-    User.findOne({"email" : email}, function(err, user) {
-      if (err)
-        return done(err)
-      if (user) {
-        //if email is taken
-        return done(null, false, {message: "email in use"})
-      }
-      else {
-        var newUser = new User()
+    User.findOne({"email" : email})
+      .then((user) => {
+        if (user)
+          return done(null, false, {message: "email in use"})
 
+        var newUser = new User()
         newUser.email = email
         newUser.profileName = req.body.profileName
         newUser.password = newUser.generateHash(password)
-
-        newUser.save(function(err, user) {
-          if (err)
-            throw err
-          user.password = undefined
-          return done(null, newUser)
-        })
-      }
-    })
+        newUser.confirmEmailToken = crypto.randomBytes(16).toString('hex')
+        newUser.save()
+          .then((user) => {
+            user.password = undefined
+            return done(null, user)
+          })
+      })
+      .catch((err) => {
+        console.log(err)
+        throw err
+      })
   }))
 
   //local login
