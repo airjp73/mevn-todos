@@ -1,0 +1,11 @@
+#Node Modules
+**/node_modules
+
+#Distribution files
+**/public
+
+#Environment Variables
+**.env
+
+#Logs
+**.log
