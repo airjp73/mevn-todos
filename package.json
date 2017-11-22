@@ -1,7 +1,7 @@
 {
-  "name": "express-vue-todos",
+  "name": "mevn-todos-api",
   "version": "1.0.0",
-  "description": "Rudimentary todo app using Express and Vue. Intended as a jumping off point for future apps.",
+  "description": "Rudimentary todo app using MEVN stack. Intended as a jumping off point for future apps.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
