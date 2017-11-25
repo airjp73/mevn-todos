@@ -1,7 +1,6 @@
 var nodemailer = require('nodemailer')
 var Email = require('email-templates')
 
-
 var transporter = nodemailer.createTransport({
   host: 'smtp.ethereal.email',
   port: 587,
@@ -21,18 +20,23 @@ var email = new Email({
   transport: transporter
 })
 
+async function sendEmail(template, target, vars) {
+  var info = await email.send({
+    template: "emails/" + template,
+    message: {
+      to: target
+    },
+    locals: vars
+  })
+  console.log("Message sent: %s", info.messageId)
+
+  return info
+}
+
 var mailer = {
   transporter,
   email,
-  sendEmail(template, target, vars) {
-    return email.send({
-      template: "emails/" + template,
-      message: {
-        to: target
-      },
-      locals: vars
-    })
-  }
+  sendEmail
 }
 
 module.exports = mailer
