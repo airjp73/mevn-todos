@@ -38,8 +38,11 @@ userSchema.statics.findUserFromRequest = function(field = null, projection = "")
     try {
 
       var select = {}
-      if (field && req.body[field])
-        select[field] = req.body[field]
+      if (field) {
+        if (!req.body[field])
+          return res.sendStatus(404)
+        select[field] = req.body[field] || ""
+      }
       else if (req.user)
         select = {_id: req.user._id}
       else

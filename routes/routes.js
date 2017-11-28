@@ -14,6 +14,15 @@ api.use(handleErrors)
 var controllers = require("./controllers.js")
 
 //Routes
+  //login
+  //logout
+  //signup
+  //resendConfirmation
+  //confirmEmail
+  //changePassword
+  //forgotPassword
+  //resetPassword
+
 api.route("/login").post(
   requireFields(["email", "password"]),
   passport.authenticate('local-login'),

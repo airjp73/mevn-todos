@@ -1,4 +1,4 @@
-module.exports = function(error, req, res, next) {
+module.exports = function(err, req, res, next) {
   console.log(err)
 
   if (!res.headerSent)

@@ -21,27 +21,28 @@ module.exports = function(passport) {
       passwordField : "password",
       passReqToCallback : true
     },
-    (req, email, password, done) => {
-      User.findOne({"email" : email})
-        .then((user) => {
-          if (user)
-            return done(null, false, {message: "email in use"})
+    async (req, email, password, done) => {
+      try {
 
-          var newUser = new User()
-          newUser.email = email
-          newUser.profileName = req.body.profileName
-          newUser.password = newUser.generateHash(password)
-          newUser.confirmEmailToken = crypto.randomBytes(16).toString('hex')
-          newUser.save()
-            .then((user) => {
-              user.password = undefined
-              return done(null, user)
-            })
-        })
-        .catch((err) => {
-          console.log(err)
-          throw err
-        })
+        //check for existing user
+        var user = await User.findOne({"email" : email})
+        if (user)
+          return done(null, false, {message: "email in use"})
+
+        user = new User()
+        user.email = email
+        user.profileName = req.body.profileName
+        user.password = user.generateHash(password)
+        user.confirmEmailToken = crypto.randomBytes(16).toString('hex')
+        user = await user.save()
+
+        user.password = undefined
+        return done(null, user)
+
+      }
+      catch(err) {
+        done(err)
+      }
     }
   ))
 
@@ -51,21 +52,22 @@ module.exports = function(passport) {
       passwordField : "password",
       passReqToCallback : true
     },
-    (req, email, password, done) => {
-      User.findOne({"email" : email}, "+password")
-        .then((user) => {
-          if (!user)
-            return done(null, false, {message : "no user found"})
-          if (!user.validPassword(password))
-            return done(null, false, {message : "invalid password"})
+    async (req, email, password, done) => {
+      try {
 
-          user.password = undefined
-          return done(null, user)
-        })
-        .catch((err) => {
-          console.log(err)
-          return done(null, false, {message: "server error"})
-        })
+        var user = await User.findOne({"email" : email}, "+password")
+        if (!user)
+          return done(null, false, {message : "no user found"})
+        if (!user.validPassword(password))
+          return done(null, false, {message : "invalid password"})
+
+        user.password = undefined
+        return done(null, user)
+
+      }
+      catch(err) {
+        done(err)
+      }
     }
   ))
 }

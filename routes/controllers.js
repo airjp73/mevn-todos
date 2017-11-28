@@ -65,7 +65,7 @@ module.exports = {
   ////logout
   logout(req, res, next) {
     req.logout()
-    return res.status(200).json({message: "Logout Successfull"})
+    return res.status(200)
   },
 
 

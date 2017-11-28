@@ -46,6 +46,10 @@ app.get("*", function(req, res) {res.sendFile(__dirname + "/app/index.html")})
 /*
     Connect to DB
 */
+/*
+  if(process.env.NODE_ENV = 'test')
+    //change to testing database
+*/
 mongoose.Promise = global.Promise
 mongoose.connect(process.env.DB_URL).then(
   () => {console.log("Database is connected")},
@@ -56,6 +60,6 @@ mongoose.connect(process.env.DB_URL).then(
   Start listening
 */
 var port = process.env.PORT || 3000
-var server = app.listen(port, function() {
+module.exports = app.listen(port, function() {
   console.log("Listening on port " + port)
 })
