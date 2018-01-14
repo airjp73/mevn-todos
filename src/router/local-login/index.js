@@ -35,7 +35,7 @@ api.route("/logout").post(
 )
 
 api.route("/signup").post(
-  requireFields(["email", "profileName", "password"]),
+  requireFields(["email", "password"]),
   passport.authenticate('local-signup'),
   controllers.signup
 )
