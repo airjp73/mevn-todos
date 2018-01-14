@@ -6,7 +6,7 @@ var expect = chai.expect
 var express = require('express')
 var router = require('./index.js')
 
-describe("router", () => {
+describe("local-login", () => {
   it("should export an express router", () => {
     expect(Object.getPrototypeOf(router)).to.equal(express.Router)
   })
