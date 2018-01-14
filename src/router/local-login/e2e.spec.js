@@ -270,7 +270,7 @@ describe('route testing', () => {
   ////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////forgotPassword
   ////////////////////////////////////////////////////////////////////////////
-  /*describe("forgotPassword", () => {
+  describe("forgotPassword", () => {
     it("should set resetPasswordToken and resetPasswordTokenExpires and send email with link", async () => {
       await mockUser()
       var fields = {
@@ -278,17 +278,18 @@ describe('route testing', () => {
       }
 
       var res = await agent.post("/api/forgotPassword").send(fields)
-      expect(res).to.have.status(200)
+      expect(res).to.have.status(202)
 
       var user = await User.findOne({email:TEST_USER.email}, "resetPasswordToken resetPasswordExpires")
       expect(user.resetPasswordToken).to.exist
       expect(user.resetPasswordExpires).to.exist
 
-      var url = "http://127.0.0.1:" + process.env.AUTH_TEST_PORT + "/resetPassword?token=" + user.resetPasswordToken
+      var url = "http://" + process.env.HOST + "/resetPassword?token=" + user.resetPasswordToken
       sinon.assert.calledOnce(mailStub)
-      expect(mailStub.args[0][0]).to.equal("forgotPassword")
-      expect(mailStub.args[0][1]).to.equal(TEST_USER.email)
-      expect(mailStub.args[0][2].link).to.equal(url)
+      var options = mailStub.getCall(0).args[0]
+      expect(options.template).to.equal("forgotPassword")
+      expect(options.message.to).to.equal(TEST_USER.email)
+      expect(options.locals.link).to.equal(url)
     })
 
     it("should return 404 if no user with that email", async () => {
@@ -298,14 +299,14 @@ describe('route testing', () => {
 
       var res = await agent.post("/api/forgotPassword").send(fields)
       expect(res).to.have.status(404)
-      sinon.assert.notCalled(mail)
+      sinon.assert.notCalled(mailStub)
     })
   })
 
   ////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////resetPassword
   ////////////////////////////////////////////////////////////////////////////
-  describe("resetPassword", () => {
+  /*describe("resetPassword", () => {
     it("should change password to newPassword field and send an email", async () => {
       var token = "testToken"
 
