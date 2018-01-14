@@ -36,7 +36,7 @@ describe("changePassword", () => {
     it("should call getUser and supply all need fields to projection", () => {
       sinon.assert.called(mocks.UserModel.findOne)
       var proj = mocks.UserModel.findOne.getCall(0).args[1]
-      expect(proj).to.equal("password")
+      expect(proj).to.equal("email password")
     })
 
     it("should call user.validPassword, user.setPassword and user.save", () => {

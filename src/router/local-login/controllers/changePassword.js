@@ -6,7 +6,7 @@ var User = require('../../../models/user')
 module.exports = async (req, res, next) => {
   try {
 
-    var user = await User.findOne({_id: req.user.id}, "password")
+    var user = await User.findOne({_id: req.user.id}, "email password")
 
     if (!user)
       return res.status(404).json({ message: "User not found" })

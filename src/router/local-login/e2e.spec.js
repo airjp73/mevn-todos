@@ -210,7 +210,7 @@ describe('route testing', () => {
   ////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////ChangePassword
   ////////////////////////////////////////////////////////////////////////////
-  /*describe("changePassword", () => {
+  describe("changePassword", () => {
     it("should change users password", async () => {
       await mockUser()
       var fields = {
@@ -219,45 +219,58 @@ describe('route testing', () => {
         newPassword: TEST_USER.newPassword
       }
 
-      await agent.post("/api/changePassword").send(fields)
+      await agent.post("/api/login").send(fields)
+      var res = await agent.post("/api/changePassword").send(fields)
+
+      expect(res).to.have.status(200)
 
       var user = await User.findOne({email:TEST_USER.email}, "email password")
       var passChanged = bcrypt.compareSync(TEST_USER.newPassword, user.password)
       expect(passChanged).to.be.true
 
       sinon.assert.calledOnce(mailStub)
-      expect(mailStub.args[0][0]).to.equal("passwordChanged")
-      expect(mailStub.args[0][1]).to.equal(TEST_USER.email)
+      var options = mailStub.getCall(0).args[0]
+      expect(options.template).to.equal("passwordChanged")
+      expect(options.message.to).to.equal(TEST_USER.email)
     })
 
     it("should return 401 on invalid user info", async () => {
+      await mockUser()
       var fields = {
         email: TEST_USER.email,
-        password: "noMatch",
+        password: TEST_USER.password,
         newPassword: TEST_USER.newPassword
       }
+
+      await agent.post("/api/login").send(fields)
+      fields.password = "nomatch"
 
       var res = await agent.post("/api/changePassword").send(fields)
       expect(res).to.have.status(401)
-      sinon.assert.notCalled(mail)
+      sinon.assert.notCalled(mailStub)
     })
 
     it("should return 400 on incomplete info", async () => {
+      await mockUser()
       var fields = {
         email: TEST_USER.email,
+        password: TEST_USER.password,
         newPassword: TEST_USER.newPassword
       }
 
+      await agent.post("/api/login").send(fields)
+      delete fields.password
+
       var res = await agent.post("/api/changePassword").send(fields)
       expect(res).to.have.status(400)
-      sinon.assert.notCalled(mail)
+      sinon.assert.notCalled(mailStub)
     })
   })
 
   ////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////forgotPassword
   ////////////////////////////////////////////////////////////////////////////
-  describe("forgotPassword", () => {
+  /*describe("forgotPassword", () => {
     it("should set resetPasswordToken and resetPasswordTokenExpires and send email with link", async () => {
       await mockUser()
       var fields = {
