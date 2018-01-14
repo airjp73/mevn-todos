@@ -5,7 +5,7 @@ var User = require('../../../models/user')
 
 module.exports = async (req, res, next) => {
   try {
-    var user = await User.findOne({resetPasswordToken: req.body.resetPasswordToken}, "email resetPasswordExpires")
+    var user = await User.findOne({resetPasswordToken: req.body.resetPasswordToken}, "+resetPasswordToken +resetPasswordExpires")
 
     if (!user)
       return res.status(404).json({message: "No user with that resetPasswordToken"})

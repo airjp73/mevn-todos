@@ -42,7 +42,7 @@ describe("resetPassword", () => {
     it("should call User.findOne", () => {
       sinon.assert.called(mocks.UserModel.findOne)
       var proj = mocks.UserModel.findOne.getCall(0).args[1]
-      expect(proj).to.equal("email resetPasswordExpires")
+      expect(proj).to.equal("+resetPasswordToken +resetPasswordExpires")
     })
 
     it("should sendStatus 202", () => {

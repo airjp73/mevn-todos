@@ -9,7 +9,7 @@ module.exports = new LocalStrategy ({
   },
   async (email, password, done) => {
     try {
-      var user = await User.findOne({email: email}, "password")
+      var user = await User.findOne({email: email}, "+password")
 
       if (!user)
         return done(null, false, {message : "no user found"})

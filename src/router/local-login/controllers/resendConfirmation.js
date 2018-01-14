@@ -6,7 +6,7 @@ var User = require('../../../models/user')
 module.exports = async (req, res, next) => {
   try {
     var selection = {_id: req.user.id}
-    var projection = "email emailConfirmed confirmEmailToken"
+    var projection = "+confirmEmailToken"
     var user = await User.findOne(selection, projection)
 
     if (!user)
