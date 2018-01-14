@@ -9,6 +9,9 @@ var requireFields = require("require-fields")
 var handleErrors = require("../middleware/handleErrors.js")
 
 api.use(handleErrors)
+//passport strategies
+var configPassport = require('./configPassport')
+configPassport()
 
 //controllers
 var controllers = require("./controllers")
