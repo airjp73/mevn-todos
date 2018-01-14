@@ -16,8 +16,8 @@ var userSchema = new mongoose.Schema({
 
 userSchema.methods.setPassword = async function(password) {
   try {
-    var salt = await bcrypt.genSalt(8)
-    this.password = await bcrypt.hash(password, salt, null)
+    var salt = bcrypt.genSaltSync(8)
+    this.password = bcrypt.hashSync(password, salt)
   }
   catch (err) {
     throw err
@@ -28,7 +28,7 @@ userSchema.methods.validPassword = async function(password) {
   try {
     if (!this.password)
       throw new Error("Method validPassword -- User data does not contain password")
-    return await bcrypt.compare(password, this.password)
+    return bcrypt.compareSync(password, this.password)
   }
   catch(err) {
     throw err
@@ -48,6 +48,7 @@ userSchema.methods.genConfirmEmailToken = function() {
 
 userSchema.methods.genResetPasswordToken = function() {
   this.resetPasswordToken = crypto.randomBytes(32).toString('hex')
+  this.resetPasswordExpires = new Date( Date.now() + 360000 )
 }
 
 //create model
