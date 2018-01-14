@@ -53,7 +53,9 @@ app.use("/api", apiRouter)
 //all other routes serve frontend and use frontend router
 app.get("*", function(req, res) {res.sendFile(__dirname + "/app/index.html")})
 
-
+////Error handling goes last
+var handleErrors = require("./router/middleware/handleErrors.js")
+app.use(handleErrors)
 
 /*
   Start listening
