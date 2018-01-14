@@ -5,7 +5,7 @@ var email = require('../../../email')
 module.exports = async (req, res, next) => {
   try {
 
-    res.sendStatus(200)
+    res.status(200).json(req.user.toJSON())
 
     //main operation is successfull so email is sent after status(200)
     email.send({

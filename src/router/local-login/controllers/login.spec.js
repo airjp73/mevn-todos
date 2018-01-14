@@ -9,7 +9,11 @@ var mocks = require('../../../testMocks')
 
 describe("login", () => {
 
-  var req = {}
+  var req = {
+    user: {
+      toJSON: sinon.spy()
+    }
+  }
 
   before(() => {
     mocks.reset()

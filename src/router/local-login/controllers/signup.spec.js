@@ -16,7 +16,8 @@ describe("signup", () => {
     var req = {
       user: {
         email: mocks.user.email,
-        confirmEmailToken: mocks.vals.token
+        confirmEmailToken: mocks.vals.token,
+        toJSON: sinon.spy()
       }
     }
 

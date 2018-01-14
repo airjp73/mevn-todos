@@ -1,5 +1,5 @@
 "use strict"
 
 module.exports = (req, res) => {
-  res.sendStatus(200)
+  res.status(200).json( req.user.toJSON() )
 }

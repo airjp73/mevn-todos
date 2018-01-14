@@ -24,7 +24,8 @@ var user = {
   validPassword: sandbox.stub(),
   setPassword: sandbox.stub(),
   genConfirmEmailToken: sandbox.stub(),
-  genResetPasswordToken: sandbox.stub()
+  genResetPasswordToken: sandbox.stub(),
+  toJSON: sandbox.stub()
 }
 
 var genConfirmFake = () => {
@@ -89,8 +90,10 @@ function reset() {
   user.setPassword.callsFake(setPassFake)
   user.genConfirmEmailToken.callsFake(genConfirmFake)
   user.genResetPasswordToken.callsFake(genResetFake)
+  user.toJSON.returns(user)
 
   UserModel.findOne.returns(user)
+
 
   crypto.randomBytes.returns(vals.buffer)
 
