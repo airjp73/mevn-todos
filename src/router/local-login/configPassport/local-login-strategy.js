@@ -5,10 +5,9 @@ var User = require('../../../models/user')
 
 module.exports = new LocalStrategy ({
     usernameField : 'email',
-    passwordField : 'password',
-    passReqToCallback : true
+    passwordField : 'password'
   },
-  async (req, email, password, done) => {
+  async (email, password, done) => {
     try {
       var user = await User.findOne({email: email}, "password")
 
