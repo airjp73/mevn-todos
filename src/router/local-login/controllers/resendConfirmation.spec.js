@@ -32,7 +32,7 @@ describe("resendConfirmation", () => {
     it("should call user.findOne and supply needed projection", () => {
       sinon.assert.called(mocks.UserModel.findOne)
       var proj = mocks.UserModel.findOne.getCall(0).args[1]
-      expect(proj).to.equal("emailConfirmed confirmEmailToken")
+      expect(proj).to.equal("email emailConfirmed confirmEmailToken")
     })
 
     it("should sendStatus 202", () => {

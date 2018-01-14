@@ -73,7 +73,7 @@ describe('route testing', () => {
   ////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////Logout
   ////////////////////////////////////////////////////////////////////////////
-  /*describe('logout', () => {
+  describe('logout', () => {
     it("should return 401 if not logged in", async () => {
       var res = await agent.post("/api/logout")
       expect(res).to.have.status(401)
@@ -140,15 +140,16 @@ describe('route testing', () => {
         email: TEST_USER.email,
         password: TEST_USER.password
       }
-      var url = "http://127.0.0.1:" + process.env.AUTH_TEST_PORT + "/confirmEmail?token=" + TEST_USER.confirmEmailToken
+      var url = "http://" + process.env.HOST + "/confirmEmail?token=" + TEST_USER.confirmEmailToken
 
       await agent.post("/api/login").send(fields)
       await agent.post("/api/resendConfirmation")
 
       sinon.assert.calledOnce(mailStub)
-      expect(mailStub.args[0][0]).to.equal("confirmEmail")
-      expect(mailStub.args[0][1]).to.equal(TEST_USER.email)
-      expect(mailStub.args[0][2].link).to.equal(url)
+      var options = mailStub.getCall(0).args[0]
+      expect(options.template).to.equal("confirmEmail")
+      expect(options.message.to).to.equal(TEST_USER.email)
+      expect(options.locals.link).to.equal(url)
     })
 
     it("should return 403 if already confirmed", async () => {
@@ -176,7 +177,7 @@ describe('route testing', () => {
   ////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////ConfirmEmail
   ////////////////////////////////////////////////////////////////////////////
-  describe("confirmEmail", () => {
+  /*describe("confirmEmail", () => {
     it("should set emailConfirmed to true and delete token", async () => {
       await mockUser()
       var fields = {

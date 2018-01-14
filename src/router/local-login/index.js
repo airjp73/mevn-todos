@@ -31,6 +31,7 @@ api.route("/login").post(
 )
 
 api.route("/logout").post(
+  requireLoggedIn,
   controllers.logout
 )
 
