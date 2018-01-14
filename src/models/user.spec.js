@@ -29,18 +29,22 @@ describe("User model", () => {
     })
   })
 
-  it("removeSensitiveInfo should remove sensitive fields", () => {
+  it("toJSON should remove sensitive info", () => {
+    user.__v = 0
+    user._id = "123123"
     user.password             = "testPass"
     user.confirmEmailToken    = "testToken"
     user.resetPasswordToken   = "testToken"
     user.resetPasswordExpires = new Date()
 
-    user.removeSensitiveInfo()
+    var userJson = user.toJSON()
 
-    expect(user.password).to.be.undefined
-    expect(user.confirmEmailToken).to.be.undefined
-    expect(user.resetPasswordToken).to.be.undefined
-    expect(user.resetPasswordExpires).to.be.undefined
+    expect(userJson.__v).to.be.undefined
+    expect(userJson._id).to.be.undefined
+    expect(userJson.password).to.be.undefined
+    expect(userJson.confirmEmailToken).to.be.undefined
+    expect(userJson.resetPasswordToken).to.be.undefined
+    expect(userJson.resetPasswordExpires).to.be.undefined
   })
 
   it("genConfirmEmailToken should populate confirmEmailToken", () => {

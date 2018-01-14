@@ -14,6 +14,15 @@ var userSchema = new mongoose.Schema({
   todos: []
 })
 
+userSchema.set('toJSON', { transform: (doc, ret, options) => {
+  delete ret.__v
+  delete ret._id
+  delete ret.password
+  delete ret.confirmEmailToken
+  delete ret.resetPasswordToken
+  delete ret.resetPasswordExpires
+}})
+
 userSchema.methods.setPassword = async function(password) {
   try {
     var salt = bcrypt.genSaltSync(8)
@@ -33,13 +42,6 @@ userSchema.methods.validPassword = async function(password) {
   catch(err) {
     throw err
   }
-}
-
-userSchema.methods.removeSensitiveInfo = function() {
-  this.password             = undefined
-  this.confirmEmailToken    = undefined
-  this.resetPasswordToken   = undefined
-  this.resetPasswordExpires = undefined
 }
 
 userSchema.methods.genConfirmEmailToken = function() {
