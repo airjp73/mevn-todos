@@ -37,7 +37,7 @@ describe("forgotPassword", () => {
     it("should create resetPasswordToken and resetPasswordTokenExpires and updateUser", () => {
       sinon.assert.called(mocks.user.save)
       expect(mocks.user.resetPasswordToken).to.equal(mocks.vals.token)
-      expect(mocks.user.resetPasswordExpires).to.be.above(Date.now())
+      expect(mocks.user.resetPasswordExpires).to.be.above(new Date())
     })
 
     it("should sendStatus 200", () => {

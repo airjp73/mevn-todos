@@ -19,6 +19,7 @@ var user = {
   confirmEmailToken: vals.token,
   emailConfirmed: false,
   resetPasswordToken: vals.token,
+  resetPasswordExpires: new Date(),
   save: sandbox.stub(),
   validPassword: sandbox.stub(),
   setPassword: sandbox.stub(),
@@ -32,6 +33,7 @@ var genConfirmFake = () => {
 
 var genResetFake = () => {
   user.resetPasswordToken = vals.token
+  user.resetPasswordExpires = new Date( Date.now() + 360000 )
 }
 
 var validPassFake = (password) => {

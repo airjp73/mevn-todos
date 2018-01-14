@@ -9,8 +9,7 @@ module.exports = async (req, res, next) => {
     var user = await User.findOne({email: req.body.email})
     if (!user)
       return res.status(404).json({message: "no user with that email"})
-    user.resetPasswordToken = crypto.randomBytes(32).toString('hex')
-    user.resetPasswordExpires = Date.now() + 360000
+    user.genResetPasswordToken()
     await user.save()
 
     //should send 202:accepted
