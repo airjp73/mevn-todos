@@ -361,27 +361,4 @@ describe('route testing', () => {
       sinon.assert.notCalled(mailStub)
     })
   })
-
-  ////////////////////////////////////////////////////////////////////////////
-  ///////////////////////////////////apiRouter
-  ////////////////////////////////////////////////////////////////////////////
-  /*describe("authRouter", () => {
-    it("should send 401 if not logged in", async () => {
-      var res = await agent.get("/test/testRoute")
-      expect(res).to.have.status(401)
-    })
-
-    it("should send 200 if logged in", async () => {
-      var user = await mockUser()
-      var fields = {
-        email: TEST_USER.email,
-        password: TEST_USER.password
-      }
-
-      await agent.post("/api/login").send(fields)
-      var res = await agent.get("/test/testRoute")
-      expect(res).to.have.status(200)
-    })
-  })*/
-
 })//end describe
