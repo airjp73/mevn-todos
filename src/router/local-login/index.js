@@ -6,9 +6,7 @@ var User = require("../../models/user.js")
 //custom middleware
 var requireLoggedIn = require("../middleware/requireLoggedIn.js")
 var requireFields = require("require-fields")
-var handleErrors = require("../middleware/handleErrors.js")
 
-api.use(handleErrors)
 //passport strategies
 var configPassport = require('./configPassport')
 configPassport()
