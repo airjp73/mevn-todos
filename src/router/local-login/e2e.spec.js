@@ -306,7 +306,7 @@ describe('route testing', () => {
   ////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////resetPassword
   ////////////////////////////////////////////////////////////////////////////
-  /*describe("resetPassword", () => {
+  describe("resetPassword", () => {
     it("should change password to newPassword field and send an email", async () => {
       var token = "testToken"
 
@@ -325,8 +325,9 @@ describe('route testing', () => {
       user = await User.findOne({_id: user.id}, "password")
       expect(bcrypt.compareSync(TEST_USER.newPassword, user.password)).to.be.true
       sinon.assert.calledOnce(mailStub)
-      expect(mailStub.args[0][0]).to.equal("passwordChanged")
-      expect(mailStub.args[0][1]).to.equal(TEST_USER.email)
+      var options = mailStub.getCall(0).args[0]
+      expect(options.template).to.equal("passwordChanged")
+      expect(options.message.to).to.equal(TEST_USER.email)
     })
 
     it("should return 403 if token expired", async () => {
@@ -346,7 +347,7 @@ describe('route testing', () => {
 
       user = await User.findOne({_id: user.id}, "password")
       expect(bcrypt.compareSync(TEST_USER.password, user.password)).to.be.true
-      sinon.assert.notCalled(mail)
+      sinon.assert.notCalled(mailStub)
     })
 
     it("should return 404 if no matching user", async () => {
@@ -357,14 +358,14 @@ describe('route testing', () => {
 
       var res = await agent.post("/api/resetPassword").send(fields)
       expect(res).to.have.status(404)
-      sinon.assert.notCalled(mail)
+      sinon.assert.notCalled(mailStub)
     })
   })
 
   ////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////apiRouter
   ////////////////////////////////////////////////////////////////////////////
-  describe("authRouter", () => {
+  /*describe("authRouter", () => {
     it("should send 401 if not logged in", async () => {
       var res = await agent.get("/test/testRoute")
       expect(res).to.have.status(401)
