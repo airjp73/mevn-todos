@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "cross-env NODE_ENV=test mocha src/**/*.spec.js"
+    "test": "cross-env NODE_ENV=test mocha src/**/*.spec.js --exit"
   },
   "author": "",
   "license": "ISC",
@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "chai-http": "^3.0.0",
+    "chai-http": "git+https://github.com/chaijs/chai-http.git",
     "chai-passport-strategy": "^1.0.1",
     "chai-sinon": "^2.8.1",
     "cross-env": "^5.1.1",
