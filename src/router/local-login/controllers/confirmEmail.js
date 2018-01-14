@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
   try {
 
     var selection = { confirmEmailToken: req.body.confirmEmailToken }
-    var projection = "emailConfirmed confirmEmailToken"
+    var projection = "email emailConfirmed confirmEmailToken"
     var user = await User.findOne(selection, projection)
 
     if (!user)

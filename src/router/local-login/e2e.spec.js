@@ -177,7 +177,7 @@ describe('route testing', () => {
   ////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////ConfirmEmail
   ////////////////////////////////////////////////////////////////////////////
-  /*describe("confirmEmail", () => {
+  describe("confirmEmail", () => {
     it("should set emailConfirmed to true and delete token", async () => {
       await mockUser()
       var fields = {
@@ -191,8 +191,9 @@ describe('route testing', () => {
       expect(user.confirmEmailToken).to.be.undefined
 
       sinon.assert.calledOnce(mailStub)
-      expect(mailStub.args[0][0]).to.equal("welcome")
-      expect(mailStub.args[0][1]).to.equal(TEST_USER.email)
+      var options = mailStub.getCall(0).args[0]
+      expect(options.template).to.equal("welcome")
+      expect(options.message.to).to.equal(TEST_USER.email)
     })
 
     it("should return 404 if confirmEmailToken has no match", async () => {
@@ -202,14 +203,14 @@ describe('route testing', () => {
 
       var res = await agent.post("/api/confirmEmail").send(fields)
       expect(res).to.have.status(404)
-      sinon.assert.notCalled(mail)
+      sinon.assert.notCalled(mailStub)
     })
   })
 
   ////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////ChangePassword
   ////////////////////////////////////////////////////////////////////////////
-  describe("changePassword", () => {
+  /*describe("changePassword", () => {
     it("should change users password", async () => {
       await mockUser()
       var fields = {
