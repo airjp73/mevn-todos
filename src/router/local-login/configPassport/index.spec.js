@@ -8,13 +8,11 @@ var signupMock = {bye: "bye"}
 var passport = {
   use: sinon.spy()
 }
-proxyquire('./index.js', {
+var configPassport = proxyquire('./index.js', {
   'passport' : passport,
   './local-login-strategy' : loginMock,
   './local-signup-strategy' : signupMock
 })
-
-var configPassport = require('./index.js')
 
 describe("configPassport", () => {
   it("should export a function", () => {
@@ -22,10 +20,8 @@ describe("configPassport", () => {
   })
 
   describe("function behavior", () => {
-    before(() => {
-      configPassport()
-    })
     it("should call passport.use", () => {
+      configPassport()
       sinon.assert.calledWith(passport.use, 'local-login', loginMock)
       sinon.assert.calledWith(passport.use, 'local-signup', signupMock)
     })

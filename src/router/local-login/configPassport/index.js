@@ -2,7 +2,7 @@
 
 var passport = require('passport')
 
-module.exports = (config) => {
+module.exports = () => {
   var localSignupStrategy = require('./local-signup-strategy')
   var localLoginStrategy  = require('./local-login-strategy')
 
