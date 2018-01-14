@@ -57,6 +57,10 @@ app.get("*", function(req, res) {res.sendFile(__dirname + "/app/index.html")})
 var handleErrors = require("./router/middleware/handleErrors.js")
 app.use(handleErrors)
 
+//App level passport config
+var configPassport = require('./configPassport')
+configPassport()
+
 /*
   Start listening
 */
