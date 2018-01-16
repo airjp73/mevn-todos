@@ -5,10 +5,10 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "cross-env NODE_ENV=test mocha src/**/*.spec.js --exit"
+    "test": "cross-env NODE_ENV=test mocha 'src/**/*.spec.js' --exit"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Aaron Pettengill",
+  "license": "MIT",
   "dependencies": {
     "async": "^2.6.0",
     "bcrypt-nodejs": "0.0.3",
