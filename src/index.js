@@ -23,6 +23,20 @@ mongoose.connect(process.env.DB_URL).then(
 )
 
 /*
+  Nuxt
+*/
+var {Nuxt, Builder} = require('nuxt')
+var nuxtConfig = require('../nuxt.config.js')
+nuxtConfig.dev = !(process.env.NODE_ENV === 'production')
+
+var nuxt = new Nuxt(nuxtConfig)
+
+if (nuxtConfig.dev) {
+  var builder = new Builder(nuxt)
+  builder.build()
+}
+
+/*
   Express configuration
 */
 const app = express()
@@ -51,7 +65,8 @@ var apiRouter = require("./router")
 app.use("/api", apiRouter)
 
 //all other routes serve frontend and use frontend router
-app.get("*", function(req, res) {res.sendFile(__dirname + "/app/index.html")})
+//app.get("*", function(req, res) {res.sendFile(__dirname + "/app/index.html")})
+app.use(nuxt.render)
 
 ////Error handling goes last
 var handleErrors = require("./router/middleware/handleErrors.js")

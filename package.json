@@ -4,13 +4,14 @@
   "description": "Rudimentary todo app in nodejs.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node src",
     "test": "cross-env NODE_ENV=test mocha 'src/**/*.spec.js' --exit"
   },
   "author": "Aaron Pettengill",
   "license": "MIT",
   "dependencies": {
     "async": "^2.6.0",
+    "axios": "^0.17.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
@@ -21,6 +22,7 @@
     "mongoose": "^4.13.2",
     "morgan": "^1.9.0",
     "nodemailer": "^4.4.0",
+    "nuxt": "^1.1.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "pug": "^2.0.0-rc.4",
