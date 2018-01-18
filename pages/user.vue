@@ -11,6 +11,7 @@
 
 <script>
 export default({
+  middleware: 'isLoggedIn',
   asyncData(context) {
     var data = context.req.user.todos
     return {todos: data}
