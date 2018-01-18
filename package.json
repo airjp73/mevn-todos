@@ -1,7 +1,7 @@
 {
-  "name": "mevn-todos-api",
+  "name": "todos",
   "version": "1.0.0",
-  "description": "Rudimentary todo app using MEVN stack. Intended as a jumping off point for future apps.",
+  "description": "Rudimentary todo app in nodejs.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
