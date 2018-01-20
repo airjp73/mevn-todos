@@ -27,7 +27,7 @@ describe("local-signup-strategy", () => {
       chai.passport.use(strategy)
         .req((req) => {
           req.body = {
-            email: "testEmail",
+            email: "testEmail@gmail.com",
             password: "testPass"
           }
         })
@@ -54,5 +54,19 @@ describe("local-signup-strategy", () => {
           done()
         })
         .authenticate()
+    })
+
+    it("should return 401 if bad email", (done) => {
+      chai.passport.use(strategy)
+      .req((req) => {
+        req.body = {
+          email: "notanemail",
+          password: mocks.user.password
+        }
+      })
+      .fail((challenge, status) => {
+        done()
+      })
+      .authenticate()
     })
 })

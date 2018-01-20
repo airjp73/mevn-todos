@@ -2,6 +2,7 @@
 
 var User = require('../../../models/user')
 var LocalStrategy = require('passport-local').Strategy
+var validator = require('validator')
 
 module.exports = new LocalStrategy({
     usernameField : 'email',
@@ -10,6 +11,9 @@ module.exports = new LocalStrategy({
   },
   async (req, email, password, done) => {
     try {
+      //validate email
+      if (!validator.isEmail(email))
+        return done(null, false, {message: "invalid email"})
 
       //check for existing user
       var user = await User.findOne({email: email})
