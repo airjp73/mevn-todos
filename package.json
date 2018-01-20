@@ -4,8 +4,8 @@
   "description": "Rudimentary todo app in nodejs.",
   "main": "server.js",
   "scripts": {
-    "start": "node src",
-    "test": "cross-env NODE_ENV=test mocha 'src/**/*.spec.js' --exit"
+    "start": "node server",
+    "test": "cross-env NODE_ENV=test mocha 'server/**/*.spec.js' --exit"
   },
   "author": "Aaron Pettengill",
   "license": "MIT",
