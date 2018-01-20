@@ -6,6 +6,7 @@ var User = require("../../models/user.js")
 //custom middleware
 var requireLoggedIn = require("../middleware/requireLoggedIn.js")
 var requireFields = require("require-fields")
+var authenticate = require('../middleware/authenticate')
 
 //passport strategies
 var configPassport = require('./configPassport')
@@ -26,7 +27,7 @@ var controllers = require("./controllers")
 
 api.route("/login").post(
   requireFields(["email", "password"]),
-  passport.authenticate('local-login'),
+  authenticate('local-login'),
   controllers.login
 )
 
@@ -37,7 +38,7 @@ api.route("/logout").post(
 
 api.route("/signup").post(
   requireFields(["email", "password"]),
-  passport.authenticate('local-signup'),
+  authenticate('local-signup'),
   controllers.signup
 )
 

@@ -102,11 +102,11 @@ describe('route testing', () => {
         email: TEST_USER.email,
         password: TEST_USER.password
       })
+      expect(res).to.have.status(200)
 
       var user = await User.findOne({email: TEST_USER.email})
-
       expect(user).to.exist
-      expect(res).to.have.status(200)
+      
     })
 
     it("should return 401 if user already exists", async () => {

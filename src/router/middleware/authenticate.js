@@ -18,9 +18,10 @@ module.exports = (strategy) => {
       //login if no problems
       req.login(user, (err) => {
         if (err)
-          next(err)
-        next()
+          return next(err)
+        return next()
       })
-    })
+
+    })(req, res, next)
   }
 }

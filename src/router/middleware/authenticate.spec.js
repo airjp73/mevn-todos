@@ -4,9 +4,11 @@ var expect = chai.expect
 
 ////Mocks
 var sandbox = sinon.createSandbox()
+var authenticateMiddleware = sandbox.spy()
 var passportMock = {
-  authenticate: sandbox.spy()
+  authenticate: sandbox.stub()
 }
+passportMock.authenticate.returns(authenticateMiddleware)
 var req = {
   login: sandbox.spy()
 }
@@ -44,6 +46,7 @@ describe("authenticate middleware", () => {
 
     sinon.assert.called(passportMock.authenticate)
     callback = passportMock.authenticate.getCall(0).args[1]
+    sinon.assert.called(authenticateMiddleware)
   })
 
   describe("callback", () => {
@@ -55,7 +58,7 @@ describe("authenticate middleware", () => {
       callback(null, {})
 
       sinon.assert.called(req.login)
-      sinon.assert.notCalled(next)
+      expect( next.getCall(0) ).to.not.exist
     })
 
     it("should call next if error", () => {
