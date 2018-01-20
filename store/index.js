@@ -4,7 +4,7 @@ import axios from 'axios'
 export default () => {
   return new Vuex.Store({
     state: {
-      user: undefined
+      user: false
     },
     actions: {
       nuxtServerInit({ commit }, { req }) {
