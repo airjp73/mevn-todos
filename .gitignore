@@ -1,8 +1,8 @@
 #Node Modules
 **/node_modules
 
-#Distribution files
-**/public
+#Nuxt build
+.nuxt
 
 #Environment Variables
 **.env
