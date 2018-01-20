@@ -14,14 +14,19 @@ var userSchema = new mongoose.Schema({
   todos: []
 })
 
-userSchema.set('toJSON', { transform: (doc, ret, options) => {
-  delete ret.__v
-  delete ret._id
-  delete ret.password
-  delete ret.confirmEmailToken
-  delete ret.resetPasswordToken
-  delete ret.resetPasswordExpires
-}})
+var toObj = {
+  transform: (doc, ret, options) => {
+    delete ret.__v
+    delete ret._id
+    delete ret.password
+    delete ret.confirmEmailToken
+    delete ret.resetPasswordToken
+    delete ret.resetPasswordExpires
+  }
+}
+
+userSchema.set('toJSON', toObj)
+userSchema.set('toObject', toObj)
 
 userSchema.methods.setPassword = async function(password) {
   try {
