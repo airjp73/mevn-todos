@@ -27,7 +27,7 @@ mongoose.connect(process.env.DB_URL).then(
 */
 var {Nuxt, Builder} = require('nuxt')
 var nuxtConfig = require('../nuxt.config.js')
-nuxtConfig.dev = !(process.env.NODE_ENV === 'production')
+nuxtConfig.dev = (process.env.NODE_ENV != 'production' && process.env.NODE_ENV != 'test')
 
 var nuxt = new Nuxt(nuxtConfig)
 
