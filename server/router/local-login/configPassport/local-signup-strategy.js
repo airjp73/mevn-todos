@@ -13,12 +13,12 @@ module.exports = new LocalStrategy({
     try {
       //validate email
       if (!validator.isEmail(email))
-        return done(null, false, {message: "invalid email"})
+        return done(null, false, {message: "Invalid email"})
 
       //check for existing user
       var user = await User.findOne({email: email})
       if (user)
-        return done(null, false, {message: "Email in use"})
+        return done(null, false, {message: "Email already in use"})
 
       //create new user
       user = new User()

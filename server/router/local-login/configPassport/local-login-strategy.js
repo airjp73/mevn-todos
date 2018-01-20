@@ -12,9 +12,9 @@ module.exports = new LocalStrategy ({
       var user = await User.findOne({email: email}, "+password")
 
       if (!user)
-        return done(null, false, {message : "no user found"})
+        return done(null, false, {message : "Email or password is invalid"})
       if ( !(await user.validPassword(password)) )
-        return done(null, false, {message : "invalid password"})
+        return done(null, false, {message : "Email or password is invalid"})
 
       return done(null, user)
     }
