@@ -1,15 +1,22 @@
 <template>
   <div>
-    <p>
+    <h2 class="display-3">
       Login
-    </p>
+    </h2>
     <form>
-      <label>Email</label>
-      <input type="text" ref="email" name="email" />
-      <label>Password</label>
-      <input type="password" ref="password" name="password" />
-      <button type="button" v-on:click="login" >Login</button>
-      <button type="button" v-on:click="signup" >Signup</button>
+      <v-text-field
+        label="Email"
+        v-model="email"
+        required
+      ></v-text-field>
+      <v-text-field
+        label="Password"
+        v-model="password"
+        :type="'password'"
+        required
+      ></v-text-field>
+      <v-btn v-on:click="login" >Login</v-btn>
+      <v-btn type="button" v-on:click="signup" >Signup</v-btn>
     </form>
   </div>
 </template>
@@ -18,24 +25,24 @@
 import axios from 'axios'
 
 export default {
+  data: {
+    email: "",
+    password: ""
+  },
   methods: {
     async signup() {
-      var email = this.$refs.email.value
-      var password = this.$refs.password.value
       var body = {
-        email,
-        password
+        email: this.email,
+        password: this.password
       }
 
       this.$store.dispatch('signup', body)
     },
 
     async login() {
-      var email = this.$refs.email.value
-      var password = this.$refs.password.value
       var body = {
-        email,
-        password
+        email: this.email,
+        password: this.password
       }
 
       this.$store.dispatch('login', body)

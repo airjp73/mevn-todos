@@ -16,12 +16,29 @@ module.exports = {
   /*
   ** Global CSS
   */
-  //css: ['~/assets/css/main.css'],
+  css: [
+    {
+        src: '~/assets/css/app.styl',
+        lang: 'styl'
+    },
+    '~/assets/css/main.css'
+  ],
 
   /*
   ** Add axios globally
   */
   build: {
-    vendor: ['axios']
-  }
+    vendor: ['axios', 'vuetify']
+    /*extractCSS: true,
+    extend(config, ctx) {
+      if (ctx.isServer) {
+        config.externals = [
+          nodeExternals({
+            whitelist: [/^vuetify/]
+          })
+        ]
+      }
+    }*/
+  },
+  plugins: ['~/plugins/setup-vuetify.js']
 }
