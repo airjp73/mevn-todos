@@ -61,7 +61,7 @@ var res = {
   status: status,
   json: sandbox.stub()
 }
-var next = sandbox.spy()
+var next = sandbox.stub()
 
 
 ////Mock User model
@@ -93,6 +93,11 @@ function reset() {
   user.toJSON.returns(user)
 
   UserModel.findOne.returns(user)
+
+  next.callsFake((err, req, res, next) => {
+    if (err)
+      console.log(err)
+  })
 
 
   crypto.randomBytes.returns(vals.buffer)
