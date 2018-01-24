@@ -1,5 +1,7 @@
 "use strict"
 
+var User = require('../../../models/user.js')
+
 module.exports = async (req, res, next) => {
   try {
 
@@ -18,7 +20,9 @@ module.exports = async (req, res, next) => {
 
     //update todo
     Object.assign(req.user.todos[index], req.body.changes)
+    req.user.markModified('todos')
     req.user = await req.user.save()
+
     res.sendStatus(200)
   }
   catch(err) {
