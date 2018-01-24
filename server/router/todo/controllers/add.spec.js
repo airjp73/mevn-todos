@@ -6,36 +6,29 @@ var sinon = require('sinon')
 var add = require('./add.js')
 
 var mocks = require('../../../testMocks')
-var proxyquire = require('proxyquire')
 var add = require('./add.js')
-
-////////////////////mocks
-var req = {
-  user: {
-    todos: [],
-    save: sinon.spy()
-  },
-  body: {
-    todo: {text:"hello"}
-  }
-}
-
-var status = sinon.spy()
-var res = {
-  status,
-  sendStatus: status
-}
-
-var next = sinon.spy()
 
 ////////////////////tests
 describe("add todo", () => {
-  it("should add todo to todos array", () => {
-    add(req, res, next)
+  it("should add todo to todos array", async () => {
+    var req = {
+      user: {
+        todos: [],
+        save: sinon.stub()
+      },
+      body: {
+        todo: {text:"hello"}
+      }
+    }
+    req.user.save.resolves(req.user)
 
+    await add(req, mocks.res, mocks.next)
+
+    sinon.assert.called(mocks.status)
+    expect(mocks.status.getCall(0).args[0]).to.equal(200)
     expect(req.user.todos.length).to.equal(1)
     expect(req.user.todos[0]).to.equal(req.body.todo)
     sinon.assert.called(req.user.save)
-    sinon.assert.notCalled(next)
+    sinon.assert.notCalled(mocks.next)
   })
 })
