@@ -9,6 +9,7 @@
         label="Email"
         v-model="email"
         :rules="validRules"
+        v-on:keyup.enter="login"
         required
       ></v-text-field>
       <v-text-field
@@ -16,6 +17,7 @@
         v-model="password"
         :rules="validRules"
         :type="'password'"
+        v-on:keyup.enter="login"
         required
       ></v-text-field>
 
