@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server",
-    "test": "cross-env NODE_ENV=test mocha 'server/**/*.spec.js' --exit"
+    "test": "mocha \"server/**/*.spec.js\" --exit",
+    "integration":"cross-env NODE_ENV=test mocha \"server/integrationTests\"",
+    "test-all" : "npm run test && npm run integration"
   },
   "author": "Aaron Pettengill",
   "license": "MIT",
