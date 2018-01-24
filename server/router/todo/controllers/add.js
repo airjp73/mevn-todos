@@ -3,7 +3,7 @@
 module.exports = async (req, res, next) => {
   try {
     req.user.todos.push(req.body.todo)
-    await req.user.save()
+    req.user = await req.user.save()
     res.sendStatus(200)
   }
   catch(err) {

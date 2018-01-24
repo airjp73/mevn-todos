@@ -8,7 +8,7 @@ module.exports = async (req, res, next) => {
       return todo.text === newTodo.text
     })
     Object.assign(req.user.todos[index], changes)
-    await req.user.save()
+    req.user = await req.user.save()
     res.sendStatus(200)
   }
   catch(err) {

@@ -18,9 +18,9 @@ module.exports = async (req, res, next) => {
 
     //remove todo
     req.user.todos.splice(index, 1)
-    await req.user.save()
+    req.user = await req.user.save()
     res.sendStatus(200)
-    
+
   }
   catch(err) {
     next(err)
