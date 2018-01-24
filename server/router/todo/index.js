@@ -9,19 +9,19 @@ var requireFields = require("require-fields")
 //controllers
 var controllers = require("./controllers")
 
-api.route('add').post(
+api.route('/add').post(
   requireLoggedIn,
   requireFields(['todo']),
   controllers.add
 )
 
-api.route('remove').post(
+api.route('/remove').post(
   requireLoggedIn,
   requireFields(["todo"]),
   controllers.remove
 )
 
-api.route('update').post(
+api.route('/update').post(
   requireLoggedIn,
   requireFields(["todo", "changes"]),
   controllers.update
