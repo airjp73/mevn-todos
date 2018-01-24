@@ -4,6 +4,7 @@
   "description": "Rudimentary todo app in nodejs.",
   "main": "server.js",
   "scripts": {
+    "api": "cross-env NODE_ENV=test nodemon server",
     "start": "node server",
     "test": "mocha \"server/**/*.spec.js\"",
     "integration": "cross-env NODE_ENV=test mocha \"server/integrationTests\" --exit",
