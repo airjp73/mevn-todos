@@ -5,21 +5,9 @@ var expect = chai.expect
 var sinon = require('sinon')
 var sandbox = sinon.createSandbox()
 
-var mocks = require('../../../testMocks')
-var proxyquire = require('proxyquire')
 var remove = require('./remove.js')
 
 ////////////////////mocks
-var req = {
-  user: {
-    todos: [{text:"hi"},{text:"hello"}],
-    save: sandbox.spy()
-  },
-  body: {
-    todo: {text:"hello"}
-  }
-}
-
 var status = sandbox.spy()
 var res = {
   status,
@@ -35,6 +23,16 @@ describe("remove todo", () => {
   })
 
   it("should remove todo from todos array", () => {
+    var req = {
+      user: {
+        todos: [{text:"hi"},{text:"hello"}],
+        save: sandbox.spy()
+      },
+      body: {
+        todo: {text:"hello"}
+      }
+    }
+
     remove(req, res, next)
 
     expect(req.user.todos.length).to.equal(1)
@@ -44,11 +42,18 @@ describe("remove todo", () => {
   })
 
   it("should work for more complex todos", () => {
-    req.user.todos = [
-      {field1: 1, field2: 2, field3: "george"},
-      {field1: 1, field2: 2, field3: "bob"}
-    ]
-    req.body.todo = {field2: 2, field3: "bob"}
+    var req = {
+      user: {
+        todos: [
+          {field1: 1, field2: 2, field3: "george"},
+          {field1: 1, field2: 2, field3: "bob"}
+        ],
+        save: sandbox.spy()
+      },
+      body: {
+        todo: {field2: 2, field3: "bob"}
+      }
+    }
 
     remove(req, res, next)
 
