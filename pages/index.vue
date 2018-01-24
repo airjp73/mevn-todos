@@ -1,6 +1,8 @@
 <template>
   <div>
-    <logout-button v-if="user" />
+    <div v-if="user">
+      <p>Logged In</p>
+    </div>
     <login-form v-else />
 
   </div>
