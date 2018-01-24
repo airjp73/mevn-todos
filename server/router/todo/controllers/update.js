@@ -17,7 +17,7 @@ module.exports = async (req, res, next) => {
       return res.sendStatus(404).json({message:"Todo not found"})
 
     //update todo
-    Object.assign(req.user.todos[index], changes)
+    Object.assign(req.user.todos[index], req.body.changes)
     req.user = await req.user.save()
     res.sendStatus(200)
   }
