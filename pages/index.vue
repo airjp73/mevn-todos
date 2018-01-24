@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="user">
-      <p>Logged In</p>
+      <todo-list></todo-list>
     </div>
     <login-form v-else />
 
@@ -11,6 +11,7 @@
 <script>
 import loginForm from "../components/login-form.vue"
 import logoutButton from "../components/logout-button.vue"
+import todoList from '../components/todo-list.vue'
 import { mapState } from 'vuex'
 
 export default {
@@ -19,7 +20,8 @@ export default {
   ]),
   components: {
     'login-form': loginForm,
-    'logout-button': logoutButton
+    'logout-button': logoutButton,
+    'todo-list' : todoList
   }
 }
 </script>
