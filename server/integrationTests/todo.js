@@ -5,6 +5,7 @@ var chaiHttp = require('chai-http')
 chai.use(chaiHttp)
 var expect = chai.expect
 var sinon = require('sinon')
+var bcrypt = require('bcrypt-nodejs')
 
 var User   = require('../models/user.js')
 var server = require('../index.js')
@@ -20,7 +21,7 @@ const TEST_USER = {
 var mockUser = async (todos = []) => {
   var testUser = new User()
   testUser.email = TEST_USER.email
-  testUser.password = "asdfasdfasdf"
+  testUser.password = bcrypt.hashSync(TEST_USER.password, bcrypt.genSaltSync(8), null)
   testUser.confirmEmailToken = TEST_USER.confirmEmailToken
   testUser.emailConfirmed = false
   testUser.todos = todos
@@ -39,9 +40,12 @@ describe('todo', () => {
     it("should add todo", async () => {
       var user = await mockUser()
       var fields = {
+        email: TEST_USER.email,
+        password: TEST_USER.password,
         todo: {text: "Hello"}
       }
 
+      await agent.post("/api/login").send(fields)
       var res = await agent.post("/api/todo/add").send(fields)
       expect(res).to.have.status(200)
 
@@ -60,9 +64,12 @@ describe('todo', () => {
         {fish:"blue", other: "something", field1: "goodbye"}
       ])
       var fields = {
+        email: TEST_USER.email,
+        password: TEST_USER.password,
         todo: {field1: "goodbye", fish: "blue"}
       }
 
+      await agent.post("/api/login").send(fields)
       var res = await agent.post("/api/todo/remove").send(fields)
       expect(res).to.have.status(200)
 
@@ -81,10 +88,13 @@ describe('todo', () => {
         {fish:"blue", other: "something", field1: "goodbye"}
       ])
       var fields = {
+        email: TEST_USER.email,
+        password: TEST_USER.password,
         todo: {field1: "goodbye", fish: "blue"},
         changes: {field1: "balooga", newField: "george"}
       }
 
+      await agent.post("/api/login").send(fields)
       var res = await agent.post("/api/todo/update").send(fields)
       expect(res).to.have.status(200)
 
