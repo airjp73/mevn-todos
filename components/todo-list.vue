@@ -1,20 +1,22 @@
 <template>
-  <ul>
-    <v-list>
-      <v-list-tile v-for="todo in user.todos" v-bind:key="todo.text">
-        <v-list-tile-content>
-          <v-list-tile-title>{{todo.text}}</v-list-tile-title>
-        </v-list-tile-content>
-      </v-list-tile>
-    </v-list>
-  </ul>
+  <v-list>
+    <todo-list-item
+      v-for="todo in user.todos"
+      v-bind:todo="todo"
+      key="todo.text"
+    ></todo-list-item>
+  </v-list>
 </template>
 
 <script>
+  import todoListItem from './todo-list-item.vue'
   import { mapState } from 'vuex'
   export default {
     computed: mapState([
       'user'
-    ])
+    ]),
+    components: {
+      'todo-list-item' : todoListItem
+    }
   }
 </script>
