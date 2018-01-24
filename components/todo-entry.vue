@@ -4,7 +4,7 @@
       <v-flex xs10>
         <v-text-field
           label="Enter todo"
-          v-model="newTodo"
+          v-model="todoText"
           v-on:keyup.enter="addTodo"
         ></v-text-field>
       </v-flex>
@@ -20,17 +20,21 @@
 
 <script>
   export default {
-    data: {
-      newTodo: ""
+    data: () => {
+      return {
+        todoText: ""
+      }
     },
     methods: {
       async addTodo() {
-        alert("pressed")
-        /*var body = {
-          todo: this.newTodo
+
+        var body = {
+          todo: {
+            text: this.todoText
+          }
         }
 
-        this.$store.dispatch('addTodo', body)*/
+        this.$store.dispatch('addTodo', body)
       }
     }
   }
