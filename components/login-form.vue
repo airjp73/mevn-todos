@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="display-3">
+    <h2 class="display-1">
       Login
     </h2>
     <v-form v-model="valid">
