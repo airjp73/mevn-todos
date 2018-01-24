@@ -1,8 +1,12 @@
 <template>
   <ul>
-    <li v-for="todo in user.todos">
-      {{todo.text}}
-    </li>
+    <v-list>
+      <v-list-tile v-for="todo in user.todos" v-bind:key="todo.text">
+        <v-list-tile-content>
+          <v-list-tile-title>{{todo.text}}</v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+    </v-list>
   </ul>
 </template>
 
