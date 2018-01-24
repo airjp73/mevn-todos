@@ -4,7 +4,8 @@ import axios from 'axios'
 export default () => {
   return new Vuex.Store({
     state: {
-      user: false
+      user: false,
+      todos: []
     },
     actions: {
       nuxtServerInit({ commit }, { req }) {
@@ -42,11 +43,24 @@ export default () => {
         catch(err) {
           console.log(err)
         }
+      },
+
+      async addTodo({ commit }, body) {
+        try {
+          await axios.post('api/addTodo', body)
+          commit('addTodo', body.todo)
+        }
+        catch(err) {
+          console.log(err)
+        }
       }
     },
     mutations: {
       user(state, user) {
         state.user = user
+      },
+      addTodo(state, todo) {
+        state.todos.push(todo)
       }
     }
   })
