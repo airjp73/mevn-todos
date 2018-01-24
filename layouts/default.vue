@@ -1,5 +1,6 @@
 <template>
   <v-app dark>
+    <toolbar></toolbar>
     <v-content>
       <v-container>
         <v-layout row wrap>
@@ -11,3 +12,12 @@
     </v-content>
   </v-app>
 </template>
+
+<script>
+  import toolbar from '../components/toolbar.vue'
+  export default {
+    components: {
+      'toolbar': toolbar,
+    }
+  }
+</script>

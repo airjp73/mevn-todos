@@ -1,5 +1,5 @@
 <template>
-  <v-btn v-on:click="logout">Logout</v-btn>
+  <v-btn v-on:click="logout" flat>Logout</v-btn>
 </template>
 
 <script>
