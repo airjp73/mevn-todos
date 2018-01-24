@@ -52,6 +52,16 @@ export default () => {
         catch(err) {
           console.log(err)
         }
+      },
+
+      async removeTodo({ commit }, body) {
+        try {
+          await axios.post('api/todo/remove', body)
+          commit('removeTodo', body.todo)
+        }
+        catch(err) {
+          console.log(err)
+        }
       }
     },
     mutations: {
@@ -60,6 +70,18 @@ export default () => {
       },
       addTodo(state, todo) {
         state.user.todos.push(todo)
+      },
+      removeTodo(state, todo) {
+        var index = state.user.todos.findIndex((userTodo) => {
+          for (var field in todo) {
+            if (!userTodo.hasOwnProperty(field) || userTodo[field] !== todo[field])
+              return false
+          }
+          return true
+        })
+
+        console.log(index)
+        state.user.todos.splice(index, 1)
       }
     }
   })
