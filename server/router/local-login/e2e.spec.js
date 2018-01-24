@@ -1,14 +1,11 @@
 "use strict"
 
 var chai = require('chai')
-//var chaiAsPromised = require('chai-as-promised')
 var chaiHttp = require('chai-http')
-//chai.use(chaiAsPromised)
 chai.use(chaiHttp)
 var expect = chai.expect
 var sinon = require('sinon')
 
-//var mongoose = require('mongoose')
 var bcrypt = require('bcrypt-nodejs')
 
 var User   = require('../../models/user.js')
@@ -106,7 +103,7 @@ describe('route testing', () => {
 
       var user = await User.findOne({email: TEST_USER.email})
       expect(user).to.exist
-      
+
     })
 
     it("should return 401 if user already exists", async () => {
