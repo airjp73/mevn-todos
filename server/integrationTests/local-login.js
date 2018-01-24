@@ -33,7 +33,7 @@ var mail = require('../email')
 var mailStub = sinon.stub(mail, "send")
 
 
-describe('route testing', () => {
+describe('local-login', () => {
   beforeEach(async () => {
     mailStub.reset()
     await User.collection.remove({email: TEST_USER.email})

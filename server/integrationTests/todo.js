@@ -29,7 +29,7 @@ var mockUser = async (todos = []) => {
 
 
 
-describe('route testing', () => {
+describe('todo', () => {
   beforeEach(async () => {
     await User.collection.remove({email: TEST_USER.email})
     agent = chai.request.agent(server)
