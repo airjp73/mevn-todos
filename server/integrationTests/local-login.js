@@ -8,8 +8,8 @@ var sinon = require('sinon')
 
 var bcrypt = require('bcrypt-nodejs')
 
-var User   = require('../../models/user.js')
-var server = require('../../index.js')
+var User   = require('../models/user.js')
+var server = require('../index.js')
 var agent = {}
 
 const COOKIE = "connect.sid"
@@ -29,7 +29,7 @@ var mockUser = async () => {
   return await testUser.save()
 }
 
-var mail = require('../../email')
+var mail = require('../email')
 var mailStub = sinon.stub(mail, "send")
 
 
