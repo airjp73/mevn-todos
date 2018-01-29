@@ -18,7 +18,8 @@ describe("update todo", () => {
     var req = {
       user: {
         todos: [{text:"hi"}, {text:"hello"}],
-        save: sinon.stub()
+        save: sinon.stub(),
+        markModified: sinon.spy()
       },
       body: {
         todo: {text:"hello"},
