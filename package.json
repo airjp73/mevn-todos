@@ -6,6 +6,8 @@
   "scripts": {
     "api": "cross-env NODE_ENV=test nodemon server",
     "start": "node server",
+    "build": "nuxt build",
+    "prod" : "cross-env NODE_ENV=production node server",
     "test": "mocha \"server/**/*.spec.js\"",
     "integration": "cross-env NODE_ENV=test mocha \"server/integrationTests\" --exit",
     "test-all": "npm run test && npm run integration"
