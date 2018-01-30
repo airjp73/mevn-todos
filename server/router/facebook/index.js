@@ -16,10 +16,10 @@ api.route('/login').get(
 )
 
 api.route('/callback').get(
-  passport.authenticate('facebook', {failureRedirect: '/'}),
-  (req, res, next) => {
-    res.redirect('/')
-  }
+  passport.authenticate('facebook', {
+    successRedirect: '/',
+    failureRedirect: '/'
+  })
 )
 
 module.exports = api;
