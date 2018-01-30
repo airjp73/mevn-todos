@@ -55,7 +55,7 @@ api.route("/confirmEmail").post(
 api.route("/changePassword").post(
   requireLoggedIn,
   requireFields(["email", "password", "newPassword"]),
-  passport.authenticate('local-login'),
+  authenticate('local-login'),
   controllers.changePassword
 )
 
