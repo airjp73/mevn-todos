@@ -3,7 +3,7 @@
 var express       = require("express")
 var mongoose      = require('mongoose')
 var passport      = require("passport")
-var session       = require('express-session')
+var cookieSession = require('cookie-session')
 var bodyParser    = require('body-parser')
 var cookieParser  = require('cookie-parser')
 var logger        = require('morgan')
@@ -51,13 +51,9 @@ app.use(express.static("app/public"))
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
-app.use(session({
-  secret : process.env.SESSION_SECRET,
-  resave: true,
-  saveUninitialized: true,
-  cookie: {
-    secure: false
-  }
+app.use(cookieSession({
+  name: 'mevn-todo-session',
+  secret : process.env.SESSION_SECRET
 }))
 app.use(passport.initialize())
 app.use(passport.session())
