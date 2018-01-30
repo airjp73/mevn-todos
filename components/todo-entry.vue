@@ -26,15 +26,18 @@
       }
     },
     methods: {
-      async addTodo() {
+      addTodo() {
+        var text = this.todoText
+        this.todoText=""
 
         var body = {
           todo: {
-            text: this.todoText
+            text
           }
         }
 
         this.$store.dispatch('addTodo', body)
+
       }
     }
   }
