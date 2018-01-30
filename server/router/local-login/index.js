@@ -1,5 +1,4 @@
 var express = require("express")
-var passport = require("passport")
 var api = express.Router()
 var User = require("../../models/user.js")
 
