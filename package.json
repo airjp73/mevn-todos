@@ -7,7 +7,7 @@
     "api": "cross-env NODE_ENV=test nodemon server",
     "dev": "cross-env NODE_ENV=dev node server",
     "build": "nuxt build",
-    "prod" : "cross-env NODE_ENV=production node server",
+    "prod": "cross-env NODE_ENV=production node server",
     "test": "mocha \"server/**/*.spec.js\"",
     "integration": "cross-env NODE_ENV=test mocha \"server/integrationTests\" --exit",
     "test-all": "npm run test && npm run integration"
@@ -28,6 +28,7 @@
     "nodemailer": "^4.4.0",
     "nuxt": "^1.1.1",
     "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
     "passport-local": "^1.0.0",
     "pug": "^2.0.0-rc.4",
     "require-fields": "^1.0.1",

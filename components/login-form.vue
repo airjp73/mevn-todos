@@ -31,6 +31,11 @@
       >Signup</v-btn>
 
     </v-form>
+
+    <v-btn large color="blue darken-3" type="button" href='/api/facebook/login'>
+      Facebook
+    </v-btn>
+
   </div>
 </template>
 
