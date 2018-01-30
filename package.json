@@ -29,6 +29,7 @@
     "nuxt": "^1.1.1",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
+    "passport-google-oauth2": "^0.1.6",
     "passport-local": "^1.0.0",
     "pug": "^2.0.0-rc.4",
     "require-fields": "^1.0.1",

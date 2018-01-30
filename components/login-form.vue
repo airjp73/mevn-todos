@@ -36,6 +36,10 @@
       Facebook
     </v-btn>
 
+    <v-btn large color="white black--text" type="button" href='/api/google/login'>
+      Google
+    </v-btn>
+
   </div>
 </template>
 
