@@ -8,10 +8,8 @@ export default () => {
     },
     actions: {
       nuxtServerInit({ commit }, { req }) {
-        //since this is called on the server side, toObject is necessary
         if (req.isAuthenticated())
           commit('user', req.user.toObject())
-
       },
 
       async signup({ commit }, body) {
@@ -80,7 +78,6 @@ export default () => {
           return true
         })
 
-        console.log(index)
         state.user.todos.splice(index, 1)
       }
     }
