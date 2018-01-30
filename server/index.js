@@ -67,8 +67,15 @@ app.use(logger('dev'))
 var apiRouter = require("./router")
 app.use("/api", apiRouter)
 
-//all other routes serve frontend and use frontend router
-//app.get("*", function(req, res) {res.sendFile(__dirname + "/app/index.html")})
+//prevent caching of nuxt files
+app.use((req, res, next) => {
+  res.header('Cache-Control', 'no-cache, no-store, must-revalidat')
+  res.header('Expires', '-1')
+  res.header('Pragma', 'no-cache')
+  next()
+})
+
+//all other routes serve frontend
 app.use(nuxt.render)
 
 ////Error handling goes last
