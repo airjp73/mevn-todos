@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "api": "cross-env NODE_ENV=test nodemon server",
-    "start": "node server",
+    "dev": "cross-env NODE_ENV=dev node server",
     "build": "nuxt build",
     "prod" : "cross-env NODE_ENV=production node server",
     "test": "mocha \"server/**/*.spec.js\"",
