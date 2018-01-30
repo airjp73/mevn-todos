@@ -36,7 +36,7 @@
           }
         }
 
-        this.$store.dispatch('addTodo', body)
+        this.$store.dispatch('todo/add', body)
 
       }
     }

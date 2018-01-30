@@ -64,7 +64,7 @@ export default {
         password: this.password
       }
 
-      this.$store.dispatch('signup', body)
+      this.$store.dispatch('auth/signup', body)
     },
 
     async login() {
@@ -76,7 +76,7 @@ export default {
         password: this.password
       }
 
-      this.$store.dispatch('login', body)
+      this.$store.dispatch('auth/login', body)
     }
   }
 }
