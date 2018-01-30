@@ -1,9 +1,9 @@
 <template>
   <v-list>
     <todo-list-item
-      v-for="todo in user.todos"
+      v-for="(todo, index) in user.todos"
       v-bind:todo="todo"
-      key="todo.text"
+      v-bind:key="index"
     ></todo-list-item>
 
     <h2
