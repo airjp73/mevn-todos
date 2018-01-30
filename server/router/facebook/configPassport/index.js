@@ -4,7 +4,7 @@ var passport = require('passport')
 var FacebookStrategy = require('passport-facebook').Strategy
 var User = require('../../../models/user')
 
-if (process.env.NODE_ENV = 'test') {
+if (process.env.NODE_ENV == 'test') {
   process.env.FACEBOOK_ID = "testID"
   process.env.FACEBOOK_SECRET = "testSecret"
 }
