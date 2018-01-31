@@ -23,7 +23,7 @@
           todo: this.todo
         }
 
-        this.$store.dispatch('todo/remove', body)
+        this.$store.dispatch('user/removeTodo', body)
       }
     }
   }

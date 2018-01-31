@@ -17,7 +17,7 @@ import todoList from '../components/todo-list.vue'
 import { mapState } from 'vuex'
 
 export default {
-  computed: mapState([
+  computed: mapState('user', [
     'user'
   ]),
   components: {
