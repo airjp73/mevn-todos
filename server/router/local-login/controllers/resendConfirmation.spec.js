@@ -45,7 +45,7 @@ describe("resendConfirmation", () => {
       sinon.assert.called(mocks.email.send)
       var options = mocks.email.send.getCall(0).args[0]
       expect(options.template).to.equal("confirmEmail")
-      expect(options.locals.link).to.equal("http://" + process.env.HOST + "/confirmEmail?token=" + mocks.vals.token)
+      expect(options.locals.link).to.equal("http://" + process.env.HOST + "/api/confirmEmail?token=" + mocks.vals.token)
     })
   })
 

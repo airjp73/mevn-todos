@@ -51,7 +51,7 @@ describe("forgotPassword", () => {
       var options = mocks.email.send.getCall(0).args[0]
       expect(options.message.to).to.equal(mocks.user.email)
       expect(options.template).to.equal("forgotPassword")
-      expect(options.locals.link).to.equal("http://" + process.env.HOST + "/resetPassword?token=" + mocks.vals.token)
+      expect(options.locals.link).to.equal("http://" + process.env.HOST + "/api/resetPassword?token=" + mocks.vals.token)
     })
   })
 
