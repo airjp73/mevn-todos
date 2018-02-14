@@ -62,9 +62,8 @@ app.use(passport.session())
 app.use(logger('dev'))
 
 //api router
-var {api, gets} = require("./router")
+var api = require("./router")
 app.use("/api", api)
-app.use(gets)
 
 app.route('/flash').get((req,res,next) => {
   req.flash('info', 'test')
