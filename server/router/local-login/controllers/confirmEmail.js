@@ -6,7 +6,7 @@ var User = require('../../../models/user')
 module.exports = async (req, res, next) => {
   try {
 
-    var selection = { confirmEmailToken: req.body.confirmEmailToken }
+    var selection = { confirmEmailToken: req.params.confirmEmailToken }
     var projection = "+confirmEmailToken"
     var user = await User.findOne(selection, projection)
 
@@ -17,7 +17,8 @@ module.exports = async (req, res, next) => {
     user.confirmEmailToken = undefined
     user = await user.save()
 
-    res.status(200).json({ message: "Email confimed" })
+    req.flash('info', 'Email successfully confirmed!')
+    res.status(200).redirect('/')
 
     //main operation is successfull so email is sent after status(200)
     email.send({

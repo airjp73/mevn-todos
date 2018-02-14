@@ -7,6 +7,7 @@ var cookieSession = require('cookie-session')
 var bodyParser    = require('body-parser')
 var cookieParser  = require('cookie-parser')
 var logger        = require('morgan')
+var flash         = require('connect-flash')
 
 //Environment Variables
 require('env2')('secrets.env')
@@ -51,6 +52,7 @@ app.use(express.static("app/public"))
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
+app.use(flash())
 app.use(cookieSession({
   name: 'mevn-todo-session',
   secret : process.env.SESSION_SECRET
@@ -60,8 +62,14 @@ app.use(passport.session())
 app.use(logger('dev'))
 
 //api router
-var apiRouter = require("./router")
-app.use("/api", apiRouter)
+var {api, gets} = require("./router")
+app.use("/api", api)
+app.use(gets)
+
+app.route('/flash').get((req,res,next) => {
+  req.flash('info', 'test')
+  res.redirect('/')
+})
 
 //prevent caching of nuxt files
 app.use((req, res, next) => {
