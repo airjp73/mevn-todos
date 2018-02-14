@@ -59,7 +59,8 @@ var status = sandbox.stub()
 var res = {
   sendStatus: status,
   status: status,
-  json: sandbox.stub()
+  json: sandbox.stub(),
+  redirect: sandbox.stub()
 }
 var next = sandbox.stub()
 

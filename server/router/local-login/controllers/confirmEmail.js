@@ -10,15 +10,17 @@ module.exports = async (req, res, next) => {
     var projection = "+confirmEmailToken"
     var user = await User.findOne(selection, projection)
 
-    if (!user)
-      return res.status(404).json({message:"No user found with that token"})
+    if (!user) {
+      req.flash('info', 'No user found with that token')
+      return res.redirect('/')
+    }
 
     user.emailConfirmed = true
     user.confirmEmailToken = undefined
     user = await user.save()
 
     req.flash('info', 'Email successfully confirmed!')
-    res.status(200).redirect('/')
+    res.redirect('/')
 
     //main operation is successfull so email is sent after status(200)
     email.send({
