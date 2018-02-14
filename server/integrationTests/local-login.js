@@ -12,7 +12,7 @@ var User   = require('../models/user.js')
 var server = require('../index.js')
 var agent = {}
 
-const COOKIE = "connect.sid"
+const COOKIE = "mevn-todo-session"
 const TEST_USER = {
   email: "mrTestUser@test.com",
   profileName: "Mr. Test",
@@ -44,7 +44,7 @@ describe('local-login', () => {
   ///////////////////////////////////Login
   ////////////////////////////////////////////////////////////////////////////
   describe('login', () => {
-    it("should return 200 and session cookie if successfull login", async () => {
+    it("should return 200 and log the user in", async () => {
       var user = await mockUser()
       var fields = {
         email: TEST_USER.email,
@@ -54,6 +54,11 @@ describe('local-login', () => {
       var res = await agent.post("/api/login").send(fields)
       expect(res).to.have.status(200)
       expect(res).to.have.cookie(COOKIE)
+
+      //test against a route that requires user to be logged in
+      //this will probably return 404 or 403, but should not return 401
+      res = await agent.post("/api/resendConfirmation")
+      expect(res).to.not.have.status(401)
     })
 
     it("should return 401 if failed login", async () => {
@@ -76,7 +81,7 @@ describe('local-login', () => {
       expect(res).to.have.status(401)
     })
 
-    it("should return 200 and no cookie on successfull logout", async () => {
+    it("should return 200 and log the user out", async () => {
       var user = await mockUser()
       var fields = {
         email: TEST_USER.email,
@@ -86,7 +91,10 @@ describe('local-login', () => {
       var res = await agent.post("/api/login").send(fields)
       res = await agent.post("/api/logout")
       expect(res).to.have.status(200)
-      expect(res).to.not.have.cookie(COOKIE)
+
+      //test against a route that requires user to be logged in
+      res = await agent.post("/api/resendConfirmation")
+      expect(res).to.have.status(401)
     })
   })
 
