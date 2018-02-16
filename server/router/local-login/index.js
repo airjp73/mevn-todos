@@ -59,7 +59,7 @@ api.route("/forgotPassword").post(
 )
 
 ////Gets
-api.route("/confirmEmail").post(
+api.route("/confirmEmail/:confirmEmailToken").get(
   //requireFields(["confirmEmailToken"], true),
   controllers.confirmEmail
 )

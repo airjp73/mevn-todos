@@ -78,6 +78,17 @@ app.use((req, res, next) => {
   next()
 })
 
+//If testing the backend, don't serve frontend, just send 200
+if (process.env.NODE_ENV === 'test') {
+  app.use((req, res) => {
+    var msgs = req.flash('info')
+
+    if (msgs)
+      return res.status(200).json({messages: msgs})
+    res.sendStatus(200)
+  })
+}
+
 //all other routes serve frontend
 app.use(nuxt.render)
 

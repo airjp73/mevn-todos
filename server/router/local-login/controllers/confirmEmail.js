@@ -5,7 +5,6 @@ var User = require('../../../models/user')
 
 module.exports = async (req, res, next) => {
   try {
-
     var selection = { confirmEmailToken: req.params.confirmEmailToken }
     var projection = "+confirmEmailToken"
     var user = await User.findOne(selection, projection)
