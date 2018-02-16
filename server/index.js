@@ -3,10 +3,11 @@
 var express       = require("express")
 var mongoose      = require('mongoose')
 var passport      = require("passport")
-var session       = require('express-session')
+var cookieSession = require('cookie-session')
 var bodyParser    = require('body-parser')
 var cookieParser  = require('cookie-parser')
 var logger        = require('morgan')
+var flash         = require('connect-flash')
 
 //Environment Variables
 require('env2')('secrets.env')
@@ -51,24 +52,44 @@ app.use(express.static("app/public"))
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
-app.use(session({
-  secret : process.env.SESSION_SECRET,
-  resave: true,
-  saveUninitialized: true,
-  cookie: {
-    secure: false
-  }
+app.use(flash())
+app.use(cookieSession({
+  name: 'mevn-todo-session',
+  secret : process.env.SESSION_SECRET
 }))
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(logger('dev'))
 
 //api router
-var apiRouter = require("./router")
-app.use("/api", apiRouter)
+var api = require("./router")
+app.use("/api", api)
 
-//all other routes serve frontend and use frontend router
-//app.get("*", function(req, res) {res.sendFile(__dirname + "/app/index.html")})
+app.route('/flash').get((req,res,next) => {
+  req.flash('info', 'test')
+  res.redirect('/')
+})
+
+//prevent caching of nuxt files
+app.use((req, res, next) => {
+  res.header('Cache-Control', 'no-cache, no-store, must-revalidat')
+  res.header('Expires', '-1')
+  res.header('Pragma', 'no-cache')
+  next()
+})
+
+//If testing the backend, don't serve frontend, just send 200
+if (process.env.NODE_ENV === 'test') {
+  app.use((req, res) => {
+    var msgs = req.flash('info')
+
+    if (msgs)
+      return res.status(200).json({messages: msgs})
+    res.sendStatus(200)
+  })
+}
+
+//all other routes serve frontend
 app.use(nuxt.render)
 
 ////Error handling goes last

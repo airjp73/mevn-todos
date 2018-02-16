@@ -1,6 +1,5 @@
 var express = require("express")
-var passport = require("passport")
-var api = express.Router()
+var api  = express.Router()
 var User = require("../../models/user.js")
 
 //custom middleware
@@ -47,15 +46,10 @@ api.route("/resendConfirmation").post(
   controllers.resendConfirmation
 )
 
-api.route("/confirmEmail").post(
-  requireFields(["confirmEmailToken"]),
-  controllers.confirmEmail
-)
-
 api.route("/changePassword").post(
   requireLoggedIn,
   requireFields(["email", "password", "newPassword"]),
-  passport.authenticate('local-login'),
+  authenticate('local-login'),
   controllers.changePassword
 )
 
@@ -64,9 +58,15 @@ api.route("/forgotPassword").post(
   controllers.forgotPassword
 )
 
+////Gets
+api.route("/confirmEmail/:confirmEmailToken").get(
+  //requireFields(["confirmEmailToken"], true),
+  controllers.confirmEmail
+)
+
 api.route("/resetPassword").post(
-  requireFields(["resetPasswordToken", "newPassword"]),
+  //requireFields(["resetPasswordToken", "newPassword"], true),
   controllers.resetPassword
 )
 
-module.exports = api;
+module.exports = api

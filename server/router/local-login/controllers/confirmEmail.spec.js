@@ -15,9 +15,10 @@ describe("confirmEmail", () => {
   describe("success case", () => {
 
     var req = {
-      body: {
+      params: {
         confirmEmailToken: mocks.vals.token
-      }
+      },
+      flash: sinon.spy()
     }
 
     before(() => {
@@ -41,10 +42,11 @@ describe("confirmEmail", () => {
       expect(mocks.user.emailConfirmed).to.be.true
     })
 
-    it("should sendStatus 200", () => {
-      sinon.assert.called(mocks.status)
-      var status = mocks.status.getCall(0).args[0]
-      expect(status).to.equal(200)
+    it("should redirect to / with flash message", () => {
+      sinon.assert.called(mocks.res.redirect)
+      sinon.assert.called(req.flash)
+      var msgName = req.flash.getCall(0).args[0]
+      expect(msgName).to.equal('info')
     })
 
     it("should send email", () => {
@@ -56,9 +58,10 @@ describe("confirmEmail", () => {
 
   describe("failure case: no user found", () => {
     var req = {
-      body: {
+      params: {
         confirmEmailToken: 1232121212
-      }
+      },
+      flash: sinon.spy()
     }
 
     before(() => {
@@ -71,10 +74,11 @@ describe("confirmEmail", () => {
       sinon.assert.notCalled(mocks.next)
     })
 
-    it("should sendStatus 404", () => {
-      sinon.assert.called(mocks.status)
-      var status = mocks.status.getCall(0).args[0]
-      expect(status).to.equal(404)
+    it("should redirect to / with flash message", () => {
+      sinon.assert.called(mocks.res.redirect)
+      sinon.assert.called(req.flash)
+      var msgName = req.flash.getCall(0).args[0]
+      expect(msgName).to.equal('info')
     })
 
     it("no user.save or email", () => {

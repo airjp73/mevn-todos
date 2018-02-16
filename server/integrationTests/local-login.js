@@ -12,7 +12,7 @@ var User   = require('../models/user.js')
 var server = require('../index.js')
 var agent = {}
 
-const COOKIE = "connect.sid"
+const COOKIE = "mevn-todo-session"
 const TEST_USER = {
   email: "mrTestUser@test.com",
   profileName: "Mr. Test",
@@ -34,17 +34,20 @@ var mailStub = sinon.stub(mail, "send")
 
 
 describe('local-login', () => {
-  beforeEach(async () => {
+  beforeEach(() => {
     mailStub.reset()
-    await User.collection.remove({email: TEST_USER.email})
     agent = chai.request.agent(server)
+  })
+
+  afterEach(async () => {
+    await User.collection.remove({email: TEST_USER.email})
   })
 
   ////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////Login
   ////////////////////////////////////////////////////////////////////////////
   describe('login', () => {
-    it("should return 200 and session cookie if successfull login", async () => {
+    it("should return 200 and log the user in", async () => {
       var user = await mockUser()
       var fields = {
         email: TEST_USER.email,
@@ -54,6 +57,11 @@ describe('local-login', () => {
       var res = await agent.post("/api/login").send(fields)
       expect(res).to.have.status(200)
       expect(res).to.have.cookie(COOKIE)
+
+      //test against a route that requires user to be logged in
+      //this will probably return 404 or 403, but should not return 401
+      res = await agent.post("/api/resendConfirmation")
+      expect(res).to.not.have.status(401)
     })
 
     it("should return 401 if failed login", async () => {
@@ -76,7 +84,7 @@ describe('local-login', () => {
       expect(res).to.have.status(401)
     })
 
-    it("should return 200 and no cookie on successfull logout", async () => {
+    it("should return 200 and log the user out", async () => {
       var user = await mockUser()
       var fields = {
         email: TEST_USER.email,
@@ -86,7 +94,10 @@ describe('local-login', () => {
       var res = await agent.post("/api/login").send(fields)
       res = await agent.post("/api/logout")
       expect(res).to.have.status(200)
-      expect(res).to.not.have.cookie(COOKIE)
+
+      //test against a route that requires user to be logged in
+      res = await agent.post("/api/resendConfirmation")
+      expect(res).to.have.status(401)
     })
   })
 
@@ -137,7 +148,7 @@ describe('local-login', () => {
         email: TEST_USER.email,
         password: TEST_USER.password
       }
-      var url = "http://" + process.env.HOST + "/confirmEmail?token=" + TEST_USER.confirmEmailToken
+      var url = "http://" + process.env.HOST + "/api/confirmEmail?token=" + TEST_USER.confirmEmailToken
 
       await agent.post("/api/login").send(fields)
       await agent.post("/api/resendConfirmation")
@@ -177,11 +188,10 @@ describe('local-login', () => {
   describe("confirmEmail", () => {
     it("should set emailConfirmed to true and delete token", async () => {
       await mockUser()
-      var fields = {
-        confirmEmailToken: TEST_USER.confirmEmailToken
-      }
 
-      await agent.post("/api/confirmEmail").send(fields)
+      var res = await agent.get("/api/confirmEmail/" + TEST_USER.confirmEmailToken)
+      expect(res).to.have.status(200)
+      console.log(res.body)
 
       var user = await User.findOne({email: TEST_USER.email}, "emailConfirmed confirmEmailToken")
       expect(user.emailConfirmed).to.be.true
@@ -193,13 +203,9 @@ describe('local-login', () => {
       expect(options.message.to).to.equal(TEST_USER.email)
     })
 
-    it("should return 404 if confirmEmailToken has no match", async () => {
-      var fields = {
-        confirmEmailToken: "asdfasdf"
-      }
-
-      var res = await agent.post("/api/confirmEmail").send(fields)
-      expect(res).to.have.status(404)
+    it("should not error if no match", async () => {
+      var res = await agent.get("/api/confirmEmail/wrong")
+      expect(res).to.have.status(200)
       sinon.assert.notCalled(mailStub)
     })
   })
@@ -281,7 +287,7 @@ describe('local-login', () => {
       expect(user.resetPasswordToken).to.exist
       expect(user.resetPasswordExpires).to.exist
 
-      var url = "http://" + process.env.HOST + "/resetPassword?token=" + user.resetPasswordToken
+      var url = "http://" + process.env.HOST + "/api/resetPassword?token=" + user.resetPasswordToken
       sinon.assert.calledOnce(mailStub)
       var options = mailStub.getCall(0).args[0]
       expect(options.template).to.equal("forgotPassword")

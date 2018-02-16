@@ -9,6 +9,9 @@ var userSchema = new mongoose.Schema({
   resetPasswordToken: {type: String, select: false},
   resetPasswordExpires: {type: Date, select: false},
 
+  facebookId: {type: String, select: false},
+  googleId: {type: String, select: false},
+
   email: String,
   profileName: String,
   todos: []
@@ -22,6 +25,8 @@ var toObj = {
     delete ret.confirmEmailToken
     delete ret.resetPasswordToken
     delete ret.resetPasswordExpires
+    delete ret.facebookId
+    delete ret.googleId
   }
 }
 

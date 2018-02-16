@@ -1,9 +1,9 @@
 <template>
   <v-list>
     <todo-list-item
-      v-for="todo in user.todos"
+      v-for="(todo, index) in user.todos"
       v-bind:todo="todo"
-      key="todo.text"
+      v-bind:key="index"
     ></todo-list-item>
 
     <h2
@@ -18,7 +18,7 @@
   import todoListItem from './todo-list-item.vue'
   import { mapState } from 'vuex'
   export default {
-    computed: mapState([
+    computed: mapState('user', [
       'user'
     ]),
     components: {

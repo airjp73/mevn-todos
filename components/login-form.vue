@@ -31,6 +31,15 @@
       >Signup</v-btn>
 
     </v-form>
+
+    <v-btn large color="blue darken-3" type="button" href='/api/facebook/login'>
+      Facebook
+    </v-btn>
+
+    <v-btn large color="white black--text" type="button" href='/api/google/login'>
+      Google
+    </v-btn>
+
   </div>
 </template>
 
@@ -55,7 +64,7 @@ export default {
         password: this.password
       }
 
-      this.$store.dispatch('signup', body)
+      this.$store.dispatch('user/signup', body)
     },
 
     async login() {
@@ -67,7 +76,7 @@ export default {
         password: this.password
       }
 
-      this.$store.dispatch('login', body)
+      this.$store.dispatch('user/login', body)
     }
   }
 }

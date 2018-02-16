@@ -12,7 +12,7 @@ module.exports = async (req, res, next) => {
       template: "confirmEmail",
       message: { to: req.user.email },
       locals: {
-        link: "http://" + process.env.HOST + "/confirmEmail?token=" + req.user.confirmEmailToken,
+        link: "http://" + process.env.HOST + "/api/confirmEmail?token=" + req.user.confirmEmailToken,
       }
     })
   }
