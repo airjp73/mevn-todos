@@ -58,6 +58,15 @@ export const actions = {
     catch(err) {
       console.log(err)
     }
+  },
+
+  async resendConfirmation({ commit}) {
+    try {
+      await axios.post('api/resendConfirmation')
+    }
+    catch(err) {
+      console.log(err)
+    }
   }
 }
 
