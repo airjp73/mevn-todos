@@ -29,6 +29,10 @@
         v-on:click="signup"
         :disabled="!valid"
       >Signup</v-btn>
+      <v-btn type="button"
+        to='/resetPassword'
+        :nuxt=true
+      >Forgot Password</v-btn>
 
     </v-form>
 

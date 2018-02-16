@@ -1,11 +1,13 @@
 <template>
   <div>
     <v-text-field
+      type='password'
       label="New Password"
       v-model="newPassword"
       v-on:keyup.enter="submit"
     ></v-text-field>
     <v-text-field
+      type='password'
       label="Confirm Password"
       v-model="confirmPassword"
       v-on:keyup.enter="submit"
@@ -15,6 +17,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 
 export default {
   asyncData: ({params}) => {
@@ -26,7 +29,12 @@ export default {
   },
   methods: {
     async submit() {
-      await axios.post('api/resetPassword', body)
+      var body = {
+        resetPasswordToken: this.resetPasswordToken,
+        newPassword: this.newPassword,
+        confirmPassword: this.confirmPassword
+      }
+      await axios.post('/api/resetPassword', body)
     }
   }
 }
