@@ -20,7 +20,7 @@ module.exports = async (req, res, next) => {
       template: "forgotPassword",
       message: { to: user.email },
       locals: {
-        link: "http://" + process.env.HOST + "/api/resetPassword?token=" + user.resetPasswordToken
+        link: "http://" + process.env.HOST + "/api/resetPassword/" + user.resetPasswordToken
       }
     })
   }
