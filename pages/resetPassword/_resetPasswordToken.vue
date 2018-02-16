@@ -25,8 +25,8 @@ export default {
     }
   },
   methods: {
-    submit() {
-
+    async submit() {
+      await axios.post('api/resetPassword', body)
     }
   }
 }

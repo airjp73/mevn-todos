@@ -148,7 +148,7 @@ describe('local-login', () => {
         email: TEST_USER.email,
         password: TEST_USER.password
       }
-      var url = "http://" + process.env.HOST + "/api/confirmEmail?token=" + TEST_USER.confirmEmailToken
+      var url = "http://" + process.env.HOST + "/api/confirmEmail/" + TEST_USER.confirmEmailToken
 
       await agent.post("/api/login").send(fields)
       await agent.post("/api/resendConfirmation")
@@ -287,7 +287,7 @@ describe('local-login', () => {
       expect(user.resetPasswordToken).to.exist
       expect(user.resetPasswordExpires).to.exist
 
-      var url = "http://" + process.env.HOST + "/api/resetPassword?token=" + user.resetPasswordToken
+      var url = "http://" + process.env.HOST + "/resetPassword/" + user.resetPasswordToken
       sinon.assert.calledOnce(mailStub)
       var options = mailStub.getCall(0).args[0]
       expect(options.template).to.equal("forgotPassword")
