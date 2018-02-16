@@ -63,7 +63,7 @@ api.route("/confirmEmail/:confirmEmailToken").get(
   controllers.confirmEmail
 )
 
-api.route("/resetPassword").get(
+api.route("/resetPassword/:resetPasswordToken").get(
   controllers.resetPassword
 )
 
