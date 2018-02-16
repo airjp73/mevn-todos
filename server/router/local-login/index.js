@@ -60,12 +60,10 @@ api.route("/forgotPassword").post(
 
 ////Gets
 api.route("/confirmEmail/:confirmEmailToken").get(
-  //requireFields(["confirmEmailToken"], true),
   controllers.confirmEmail
 )
 
-api.route("/resetPassword").post(
-  //requireFields(["resetPasswordToken", "newPassword"], true),
+api.route("/resetPassword").get(
   controllers.resetPassword
 )
 
