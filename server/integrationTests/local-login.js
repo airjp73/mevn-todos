@@ -191,7 +191,6 @@ describe('local-login', () => {
 
       var res = await agent.get("/api/confirmEmail/" + TEST_USER.confirmEmailToken)
       expect(res).to.have.status(200)
-      console.log(res.body)
 
       var user = await User.findOne({email: TEST_USER.email}, "emailConfirmed confirmEmailToken")
       expect(user.emailConfirmed).to.be.true
