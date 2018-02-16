@@ -58,13 +58,14 @@ api.route("/forgotPassword").post(
   controllers.forgotPassword
 )
 
+api.route("/resetPassword").post(
+  requireFields(["resetPasswordToken", "newPassword"], true),
+  controllers.resetPassword
+)
+
 ////Gets
 api.route("/confirmEmail/:confirmEmailToken").get(
   controllers.confirmEmail
-)
-
-api.route("/resetPassword/:resetPasswordToken").get(
-  controllers.resetPassword
 )
 
 module.exports = api
