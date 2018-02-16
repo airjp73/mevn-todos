@@ -34,7 +34,15 @@ export default {
         newPassword: this.newPassword,
         confirmPassword: this.confirmPassword
       }
-      await axios.post('/api/resetPassword', body)
+
+      try {
+        await axios.post('/api/resetPassword', body)
+        this.$nuxt.$router.push({path: '/'})
+      }
+      catch (err) {
+        //flash message probably
+        console.log(err)
+      }
     }
   }
 }

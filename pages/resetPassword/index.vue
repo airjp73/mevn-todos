@@ -23,7 +23,16 @@ export default {
       var body = {
         email: this.email
       }
-      await axios.post('/api/forgotPassword', body)
+
+      try {
+        await axios.post('/api/forgotPassword', body)
+        this.$nuxt.$router.push({path: '/'})
+      }
+      catch (err) {
+        //flash message probably
+        console.log(err)
+      }
+
     }
   }
 }
